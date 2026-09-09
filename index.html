@@ -17,16 +17,16 @@
         <a class="brand" href="#" aria-label="Sonora home"><span class="brand-mark"><i></i><i></i><i></i></span><span>sonora<span class="brand-period">.</span></span></a>
         <div class="sidebar-caption"><span class="status-pulse"></span> Curated for your night</div>
         <nav class="primary-nav" aria-label="Main navigation">
-          <a class="nav-link active" href="#player"><i data-lucide="disc-3"></i><span>Now playing</span></a>
-          <a class="nav-link" href="#queue"><i data-lucide="list-music"></i><span>Your library</span></a>
-          <a class="nav-link" href="#favorites"><i data-lucide="heart"></i><span>Favorites</span><span class="nav-count" id="favorite-count">0</span></a>
+          <a class="nav-link active" href="#player" data-slide="player"><i data-lucide="disc-3"></i><span>Now playing</span></a>
+          <a class="nav-link" href="#queue" data-slide="library"><i data-lucide="list-music"></i><span>Your library</span></a>
+          <a class="nav-link" href="#favorites" data-slide="favorites"><i data-lucide="heart"></i><span>Favorites</span><span class="nav-count" id="favorite-count">0</span></a>
         </nav>
         <div class="sidebar-section">
           <div class="section-row"><p class="eyebrow">Your space</p><button class="mini-icon" id="new-playlist" type="button" aria-label="Create a new playlist"><i data-lucide="plus"></i></button></div>
           <div class="playlist-list">
-            <button class="playlist-row" type="button"><span class="playlist-dot coral"></span><span>Late night radio</span></button>
-            <button class="playlist-row" type="button"><span class="playlist-dot yellow"></span><span>Focus flow</span></button>
-            <button class="playlist-row" type="button"><span class="playlist-dot mint"></span><span>Sunday morning</span></button>
+            <button class="playlist-row" type="button" data-playlist="Late night radio"><span class="playlist-dot coral"></span><span>Late night radio</span></button>
+            <button class="playlist-row" type="button" data-playlist="Focus flow"><span class="playlist-dot yellow"></span><span>Focus flow</span></button>
+            <button class="playlist-row" type="button" data-playlist="Sunday morning"><span class="playlist-dot mint"></span><span>Sunday morning</span></button>
           </div>
         </div>
         <div class="sidebar-footer">
@@ -41,11 +41,14 @@
           <div class="top-actions">
             <label class="upload-button" for="audio-upload"><i data-lucide="plus"></i><span>Add music</span></label>
             <input id="audio-upload" type="file" accept="audio/*" multiple hidden />
-            <button class="avatar-button" type="button" aria-label="Open profile"><span>AR</span></button>
+            <button class="avatar-button" type="button" aria-label="Open profile"><span>PK</span></button>
           </div>
         </header>
 
-        <section class="hero-grid">
+        <div class="content-slides" aria-live="polite">
+          <div class="slides-track">
+            <section class="content-slide" data-slide-panel="player">
+              <div class="hero-grid">
           <div class="artwork-column">
             <div class="section-label"><span class="live-dot"></span><span>Listening now</span><span class="section-label-line"></span><span class="section-label-code">AUDIO / 001</span></div>
             <div class="artwork-frame" id="artwork-frame">
@@ -59,7 +62,7 @@
                 <p class="artist-name" id="track-artist">M83</p>
                 <p class="album-name" id="track-album">Hurry Up, We’re Dreaming</p>
               </div>
-              <button class="icon-button favorite-button" id="favorite-button" type="button" aria-label="Add to favorites" aria-pressed="false"><i data-lucide="heart"></i></button>
+                <div class="track-actions"><button class="icon-button" id="add-current-to-playlist" type="button" aria-label="Add song to a playlist"><i data-lucide="bookmark-plus"></i></button><button class="icon-button favorite-button" id="favorite-button" type="button" aria-label="Add to favorites" aria-pressed="false"><i data-lucide="heart"></i></button></div>
             </div>
           </div>
 
@@ -86,12 +89,31 @@
               <button class="queue-toggle" type="button" onclick="document.getElementById('queue').scrollIntoView({ behavior: 'smooth' })"><i data-lucide="panel-right"></i><span>Queue</span></button>
             </div>
           </div>
-        </section>
+              </div>
+            </section>
 
-        <section class="queue-section" id="queue">
-          <div class="section-heading"><div><p class="eyebrow">Up next</p><h2>Queue <span id="queue-count">05 tracks</span></h2></div><div class="queue-actions"><button class="text-button" id="clear-queue" type="button">Clear queue <i data-lucide="x"></i></button><button class="text-button" id="add-to-playlist" type="button">Save queue <i data-lucide="bookmark-plus"></i></button></div></div>
-          <div class="queue-list" id="queue-list"></div>
-        </section>
+            <section class="content-slide" data-slide-panel="library" id="queue">
+              <section class="queue-section">
+                <div class="section-heading"><div><p class="eyebrow">Up next</p><h2>Queue <span id="queue-count">05 tracks</span></h2></div><div class="queue-actions"><button class="text-button" id="clear-queue" type="button">Clear queue <i data-lucide="x"></i></button><button class="text-button" id="add-to-playlist" type="button">Save queue <i data-lucide="bookmark-plus"></i></button></div></div>
+                <div class="queue-list" id="queue-list"></div>
+              </section>
+            </section>
+
+            <section class="content-slide" data-slide-panel="favorites" id="favorites">
+              <section class="queue-section favorites-section">
+                <div class="section-heading"><div><p class="eyebrow">Saved for later</p><h2>Favorites <span id="favorites-count">00 tracks</span></h2></div></div>
+                <div class="queue-list" id="favorite-list"></div>
+              </section>
+            </section>
+
+            <section class="content-slide" data-slide-panel="playlist" id="playlist-slide">
+              <section class="queue-section">
+                <div class="section-heading"><div><p class="eyebrow">Your space</p><h2 id="playlist-slide-title">Playlist</h2></div></div>
+                <div class="queue-list" id="playlist-slide-list"></div>
+              </section>
+            </section>
+          </div>
+        </div>
       </main>
     </div>
 
@@ -99,11 +121,11 @@
     <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation" aria-hidden="true">
       <div class="mobile-drawer-header"><a class="brand" href="#player" aria-label="Sonora home"><span class="brand-mark"><i></i><i></i><i></i></span><span>sonora<span class="brand-period">.</span></span></a><button class="mobile-close-button" id="mobile-close-button" type="button" aria-label="Close navigation"><i data-lucide="x"></i></button></div>
       <nav class="mobile-nav" aria-label="Mobile main navigation">
-        <a class="nav-link active" href="#player"><i data-lucide="disc-3"></i><span>Now playing</span></a>
-        <a class="nav-link" href="#queue"><i data-lucide="list-music"></i><span>Your library</span></a>
-        <a class="nav-link" href="#favorites"><i data-lucide="heart"></i><span>Favorites</span><span class="nav-count" id="mobile-favorite-count">0</span></a>
+        <a class="nav-link active" href="#player" data-slide="player"><i data-lucide="disc-3"></i><span>Now playing</span></a>
+        <a class="nav-link" href="#queue" data-slide="library"><i data-lucide="list-music"></i><span>Your library</span></a>
+        <a class="nav-link" href="#favorites" data-slide="favorites"><i data-lucide="heart"></i><span>Favorites</span><span class="nav-count" id="mobile-favorite-count">0</span></a>
       </nav>
-      <div class="mobile-space"><div class="section-row"><p class="eyebrow">Your space</p><i data-lucide="sparkles"></i></div><button class="playlist-row" type="button"><span class="playlist-dot coral"></span><span>Late night radio</span></button><button class="playlist-row" type="button"><span class="playlist-dot yellow"></span><span>Focus flow</span></button><button class="playlist-row" type="button"><span class="playlist-dot mint"></span><span>Sunday morning</span></button></div>
+      <div class="mobile-space"><div class="section-row"><p class="eyebrow">Your space</p><i data-lucide="sparkles"></i></div><button class="playlist-row" type="button" data-playlist="Late night radio"><span class="playlist-dot coral"></span><span>Late night radio</span></button><button class="playlist-row" type="button" data-playlist="Focus flow"><span class="playlist-dot yellow"></span><span>Focus flow</span></button><button class="playlist-row" type="button" data-playlist="Sunday morning"><span class="playlist-dot mint"></span><span>Sunday morning</span></button></div>
     </aside>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
